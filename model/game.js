@@ -2,16 +2,19 @@ const Sequelize = require('sequelize');
 const db = require('../database/db');
 
 module.exports = db.sequelize.define(
-	"tb_games",
+	"Games",
 	{
-		name: {
-			type: Sequelize.STRING,
-		},
-		price: {
+		id: {
 			type: Sequelize.INTEGER,
 			primaryKey: true,
 			autoIncrement: true,
-		}
+		},
+		game_name: {
+			type: Sequelize.STRING,
+		},
+		game_description: {
+			type: Sequelize.STRING,
+		},
 	},
 	{
 		timestamps: false,
