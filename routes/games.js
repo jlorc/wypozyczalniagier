@@ -12,8 +12,8 @@ router.get('/games', (req, res) => {
 });
 
 router.post('/game', (req, res) => {
-	if (!req.body.name) {
-		res.status(400)
+	if (!req.body.game_name) {
+		res.status(400);
 		res.json({
 			error: "Bad data",
 		})
@@ -24,6 +24,34 @@ router.post('/game', (req, res) => {
 			console.log(`Error: ${err}`);
 		})
 	}
+});
+
+router.put('/game/:id', (req, res) => {
+	if (!req.body.is_rented) {
+		res.status(400);
+		res.json({
+			error: "Bad data",
+		})
+	} else {
+		Game.update(
+			{is_rented: req.body.is_rented},
+			{where: {id: req.params.id}}
+		).then(() => {
+			res.send('Game updated');
+		}).error(err => res.send(err));
+	}
+});
+
+router.delete('/game/:id', (req, res) => {
+	Game.destroy({
+		where: {
+			id: req.params.id
+		}
+	}).then(() => {
+		res.send("Task deleted!")
+	}).catch(err => {
+		console.log(`Error ${err}`);
+	})
 });
 
 module.exports = router;
