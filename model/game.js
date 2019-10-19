@@ -15,6 +15,9 @@ module.exports = db.sequelize.define(
 		game_description: {
 			type: Sequelize.STRING,
 		},
+		is_rented: {
+			type: Sequelize.INTEGER,
+		},
 	},
 	{
 		timestamps: false,
