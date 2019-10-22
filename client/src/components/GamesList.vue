@@ -1,8 +1,8 @@
 <template>
   <div class="container">
     <h1>Wypożyczalnia gier</h1>
-    <ul>
-      <li v-for="item in list">
+    <ul class="box">
+      <li v-for="item in list" class="box__content">
         <span>{{ item.id}}</span>
         <span>{{ item.game_name}}</span>
         <p>{{ item.game_description }}</p>
@@ -35,5 +35,13 @@ export default {
 };
 </script>
 
-<style scoped>
+<style lang="less">
+  .box {
+    background: red;
+    padding: 30px;
+
+    &__content {
+      background: green;
+    }
+  }
 </style>
