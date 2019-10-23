@@ -18,6 +18,33 @@ module.exports = db.sequelize.define(
 		is_rented: {
 			type: Sequelize.INTEGER,
 		},
+		img_url: {
+			type: Sequelize.STRING,
+		},
+		producer: {
+			type: Sequelize.STRING,
+		},
+		publisher: {
+			type: Sequelize.STRING,
+		},
+		category: {
+			type: Sequelize.STRING,
+		},
+		game_mode: {
+			type: Sequelize.STRING,
+		},
+		release_date: {
+			type: Sequelize.STRING,
+		},
+		rating: {
+			type: Sequelize.FLOAT,
+		},
+		hardware_requirements: {
+			type: Sequelize.STRING,
+		},
+		quantity: {
+			type: Sequelize.INTEGER,
+		},
 	},
 	{
 		timestamps: false,

@@ -1,22 +1,25 @@
 class FetchClass {
-  postData(url, headers, body, fromState, clearState) {
-    // const headersResult = new Headers();
-    // let promise = Promise.resolve();
-    // promise = promise.then(() => {
-    //   return BootstrapService.loop(Object.keys(headers), key => {
-    //     return headersResult.append(key, headers[key]);
-    //   });
-    // });
-    // promise = promise.then(() => {
-    //   return this.fetchData(url, fromState, clearState, {
-    //     headers: headersResult, body, credentials: 'same-origin', method: 'POST',
-    //   });
-    // });
-    // return promise;
+  postData(url, objectData) {
+    const bodyData = new URLSearchParams(objectData);
+
+    return fetch(url, {
+      method: 'POST',
+      mode: 'cors',
+      cache: 'no-cache',
+      credentials: 'same-origin',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+      },
+      redirect: 'follow',
+      referrer: 'no-referrer',
+      body: bodyData,
+    }).then(response => {
+      console.log(response);
+    });
   }
 
   fetchData(url) {
-    return fetch(url).then(function(response) {
+    return fetch(url).then(response => {
       return response.json()
     });
   }
