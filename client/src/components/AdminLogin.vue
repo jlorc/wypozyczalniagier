@@ -80,6 +80,7 @@
       flex-direction: column;
       min-width: 280px;
       border-radius: 8px;
+      box-shadow: 0px 0px 26px 0px rgba(255, 255, 255, 0.83);
     }
 
     &__logo {
@@ -99,7 +100,7 @@
       padding: 0 10px;
       background: transparent;
       color: white;
-      border: 1px solid #dcdcdc;
+      border: 1px solid #505050;
       border-radius: 3px;
       min-height: 40px;
       margin-bottom: 5px;
