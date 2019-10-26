@@ -7,7 +7,21 @@
 		name: 'AdminPanel',
 		data() {
 			return {
-				title: '',
+				newGame: {
+					id: null,
+          game_name: null,
+          game_description: null,
+          is_rented: null,
+          img_url: null,
+					producer: null,
+					publisher: null,
+					category: null,
+					game_mode: null,
+					release_date: null,
+					rating: null,
+					hardware_requirements: null,
+					quantity: null,
+        }
 			};
 		},
 		mounted() {

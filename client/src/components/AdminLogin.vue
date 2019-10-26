@@ -6,8 +6,9 @@
         <span class="login__title">Zaloguj się</span>
         <input type="text" class="login__input" placeholder="Login" v-model="login">
         <span class="login__error" v-if="loginError">Proszę podać login.</span>
-        <input type="text" class="login__input" placeholder="Hasło" v-model="password">
+        <input type="password" class="login__input" placeholder="Hasło" v-model="password">
         <span class="login__error" v-if="passwordError">Proszę podać hasło.</span>
+        <span class="login__error" v-if="badData">Błędny login/hasło, spróbuj ponownie!</span>
         <span class="login__button" @click="validateData">Zaloguj</span>
       </div>
     </div>
@@ -25,6 +26,7 @@
         password: '',
         loginError: false,
         passwordError: false,
+        badData: false,
       }
     },
 		methods: {
@@ -34,13 +36,18 @@
 				if (this.login) this.loginError = false;
 				if (this.password) this.passwordError = false;
 
+				const loginData = {
+					'login': this.login,
+          'password': this.password,
+        };
+
 				if (this.login && this.password) {
-					// FetchService.postData('http://localhost:3000/api/game',data);
+					FetchService.postData('http://localhost:3000/login/authenticate', loginData).then(res => {
+						if (res.status === 400) return this.badData = true;
+						this.badData = false;
+						this.$router.push('/admin-panel');
+          });
         }
-
-
-				console.log('login', this.login);
-				console.log('pass', this.password);
 			}
 		}
 	}

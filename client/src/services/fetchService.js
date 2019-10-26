@@ -13,8 +13,6 @@ class FetchClass {
       redirect: 'follow',
       referrer: 'no-referrer',
       body: bodyData,
-    }).then(response => {
-      console.log(response);
     });
   }
 

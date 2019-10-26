@@ -24,5 +24,9 @@ export default new Router({
       name: 'AdminPanel',
       component: AdminPanel,
     },
+    {
+      path: '*',
+      redirect: '/'
+    }
   ],
 });

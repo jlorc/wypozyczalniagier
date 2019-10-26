@@ -2,7 +2,8 @@ const express = require('express');
 const router = express.Router();
 const Game = require('../model/game');
 
-//get all games
+module.exports = router;
+
 router.get('/games', (req, res) => {
 	Game.findAll().then(games => {
 		res.json(games);
