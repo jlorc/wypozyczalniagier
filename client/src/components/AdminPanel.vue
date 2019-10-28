@@ -2,7 +2,7 @@
   <div class="admin-panel">
     <div class="admin-panel__menu">
       <div class="admin-panel__logo">
-        <img src="../assets/logo.png" alt="">
+        <router-link to="/"><img src="../assets/logo-games.png" alt=""></router-link>
       </div>
       <span class="admin-panel__name">Admin</span>
       <div class="admin-panel__menu-wrapper">
@@ -22,57 +22,143 @@
       </div>
       <div v-if="!showDashboardHome" class="admin-panel__dashboard-box">
         <h1 class="admin-panel__dashboard-title">Dodaj grę</h1>
+        <div class="admin-panel__dashboard-content">
+          <div class="admin-panel__dashboard-item" v-for="item in newGame">
+            <input type="text" :placeholder="item.placeholder" v-model="item.value" class="admin-panel__dashboard-input">
+          </div>
+        </div>
+        <span class="admin-panel__dashboard-error" v-if="error">Proszę uzupełnić wszystkie pola!</span>
+        <span class="admin-panel__dashboard-success" v-if="success">Gra została dodana pomyślnie!</span>
+        <span @click="addGame" class="admin-panel__add-button">Dodaj</span>
       </div>
     </div>
   </div>
 </template>
 
 <script>
+  import FetchService from "../services/fetchService";
+
 	export default {
 		name: 'AdminPanel',
 		data() {
 			return {
 				showDashboardHome: true,
+        error: false,
+        success: false,
 				newGame: {
-					id: null,
-          game_name: null,
-          game_description: null,
-          is_rented: null,
-          img_url: null,
-					producer: null,
-					publisher: null,
-					category: null,
-					game_mode: null,
-					release_date: null,
-					rating: null,
-					hardware_requirements: null,
-					quantity: null,
+					id: {
+						value: null,
+            placeholder: 'ID',
+          },
+          game_name: {
+						value: null,
+						placeholder: 'Nazwa gry',
+					},
+          game_description: {
+						value: null,
+						placeholder: 'Opis gry',
+					},
+          img_url: {
+						value: null,
+						placeholder: 'URL do zdjęcia',
+					},
+					producer: {
+						value: null,
+						placeholder: 'Producent',
+					},
+					publisher: {
+						value: null,
+						placeholder: 'Wydawca',
+					},
+					category: {
+						value: null,
+						placeholder: 'Kategoria',
+					},
+					game_mode: {
+						value: null,
+						placeholder: 'Tryb gry',
+					},
+					release_date: {
+						value: null,
+						placeholder: 'Data wydania',
+					},
+					rating: {
+						value: null,
+						placeholder: 'Ocena gry',
+					},
+					hardware_requirements: {
+						value: null,
+						placeholder: 'Wymagania sprzętowe',
+					},
+					quantity: {
+						value: null,
+						placeholder: 'Ilość',
+					},
         }
 			};
 		},
-		mounted() {
-			this.init();
-		},
 		methods: {
-			init() {
-				const data = {
-					'id' : 2,
-					'game_name': 'test',
-					'game_description': 'das',
-					'is_rented': '0',
-					'img_url': 'das',
-					'producer': 'das',
-					'publisher': 'das',
-					'category': 'das',
-					'game_mode': 'das',
-					'release_date': 'das',
-					'rating': 5,
-					'hardware_requirements': 'asdd',
-					'quantity': 15,
-				};
+			validateAddFields() {
+				return (
+					this.newGame.id.value &&
+          this.newGame.game_name.value &&
+          this.newGame.game_description.value &&
+          this.newGame.img_url.value &&
+          this.newGame.producer.value &&
+          this.newGame.publisher.value &&
+          this.newGame.category.value &&
+          this.newGame.game_mode.value &&
+          this.newGame.release_date.value &&
+          this.newGame.rating.value &&
+          this.newGame.hardware_requirements.value &&
+          this.newGame.quantity.value
+        );
 			},
+      clearInputs() {
+				this.newGame.id.value = null;
+				this.newGame.game_name.value = null;
+				this.newGame.game_description.value = null;
+				this.newGame.img_url.value = null;
+				this.newGame.producer.value = null;
+				this.newGame.publisher.value = null;
+				this.newGame.category.value = null;
+				this.newGame.game_mode.value = null;
+				this.newGame.release_date.value = null;
+				this.newGame.rating.value = null;
+				this.newGame.hardware_requirements.value = null;
+				this.newGame.quantity.value = null;
+      },
 			showHome(bool) {
 				this.showDashboardHome = bool;
+      },
+      addGame() {
+				const data = {
+					'id' : this.newGame.id.value,
+					'game_name': this.newGame.game_name.value,
+					'game_description': this.newGame.game_description.value,
+					'is_rented': 0,
+					'img_url': this.newGame.img_url.value,
+					'producer': this.newGame.producer.value,
+					'publisher': this.newGame.publisher.value,
+					'category': this.newGame.category.value,
+					'game_mode': this.newGame.game_mode.value,
+					'release_date': this.newGame.release_date.value,
+					'rating': this.newGame.rating.value,
+					'hardware_requirements': this.newGame.hardware_requirements.value,
+					'quantity': this.newGame.quantity.value,
+				};
+
+				if (!this.validateAddFields()) {
+					this.error = true;
+					this.success = false;
+        }
+				if (this.validateAddFields()) {
+					this.error = false;
+					FetchService.postData('http://localhost:3000/api/game', data).then(res => {
+						this.clearInputs();
+						this.success = true;
+					});
+        }
       }
 		}
 	};
@@ -82,6 +168,19 @@
   .admin-panel {
     display: flex;
     height: 100vh;
+
+    &__add-button {
+      display: block;
+      color: white;
+      background-color: #42b883;
+      padding: 10px 30px;
+      border-radius: 3px;
+      text-align: center;
+      margin: 20px auto 0;
+      cursor: pointer;
+      max-width: 200px;
+      font-size: 18px;
+    }
 
     &__menu {
       border-right: 1px solid #505050;
@@ -99,8 +198,47 @@
       width: 100%;
       padding: 40px 50px;
 
+      &-error {
+        color: #fa2f44;
+        margin: 5px 0;
+        font-size: 14px;
+      }
+
+      &-success {
+        color: #42b883;
+        margin: 5px 0;
+        font-size: 14px;
+      }
+
       &-title {
         color: white;
+      }
+
+      &-content {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+        margin-top: 60px;
+      }
+
+      &-item {
+        width: 48%;
+        margin-bottom: 35px;
+      }
+
+      &-input {
+        width: 100%;
+        background: transparent;
+        border: none;
+        border-bottom: 1px solid #505050;
+        font-size: 18px;
+        padding-bottom: 5px;
+        color: white;
+
+        &:focus {
+          outline: none;
+        }
       }
     }
 
@@ -118,7 +256,6 @@
       img {
         width: 100%;
         max-width: 90px;
-        margin-top: 20px;
       }
     }
 
