@@ -1,8 +1,29 @@
 const express = require('express');
 const router = express.Router();
 const Game = require('../model/game');
+const Category = require('../model/category');
 
 module.exports = router;
+
+router.post('/category', (req, res) => {
+	Game.findAll({
+		where: {
+			category: req.body.category_id,
+		}
+	}).then(categories => {
+		res.json(categories);
+	}).catch(err => {
+		res.send(`error: ${err}`);
+	})
+});
+
+router.get('/categories', (req, res) => {
+	Category.findAll().then(categories => {
+		res.json(categories);
+	}).catch(err => {
+		res.send(`error: ${err}`);
+	})
+});
 
 router.get('/games', (req, res) => {
 	Game.findAll().then(games => {

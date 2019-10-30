@@ -26,7 +26,15 @@ export default {
 				this.list = data;
 				console.log(this.list);
       });
-		}
+
+			this.refreshList();
+		},
+		refreshList() {
+			this.$root.$on('categoryUpdate', this.filterGames);
+    },
+    filterGames(list) {
+  		this.list = list;
+    }
   }
 };
 </script>
