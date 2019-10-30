@@ -1,13 +1,9 @@
 <template>
-  <div class="container">
-    <h1>Wypożyczalnia gier</h1>
-    <ul class="box">
-      <li v-for="item in list" class="box__content">
-        <span>{{ item.id}}</span>
-        <span>{{ item.game_name}}</span>
-        <p>{{ item.game_description }}</p>
-      </li>
-    </ul>
+  <div class="games-list__container">
+    <div v-for="item in list" class="games-list__box">
+      <img :src="item.img_url"/>
+      <span class="games-list__name">{{ item.game_name }}</span>
+    </div>
   </div>
 </template>
 
@@ -36,12 +32,39 @@ export default {
 </script>
 
 <style lang="less">
-  .box {
-    background: red;
-    padding: 30px;
+  .games-list {
+    &__container {
+      display: flex;
+      justify-content: flex-start;
+      align-items: flex-start;
+      flex-wrap: wrap;
+      margin-top: 50px;
+    }
 
-    &__content {
-      background: green;
+    &__box {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      border-radius: 6px;
+      box-shadow: 0px 0px 15px 0px rgba(255, 255, 255, 0.83);
+      width: 135px;
+      padding: 10px 15px;
+      box-sizing: border-box;
+      margin: 0 15px 25px;
+      cursor: pointer;
+
+      img {
+        max-width: 110px;
+      }
+    }
+
+    &__name {
+      color: white;
+      font-size: 14px;
+      margin-top: 10px;
+      display: block;
+      text-align: center;
     }
   }
 </style>

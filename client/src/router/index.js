@@ -1,6 +1,6 @@
 import Vue from 'vue';
 import Router from 'vue-router';
-import GamesList from '@/components/GamesList';
+import Home from '@/components/Home';
 import AdminPanel from '@/components/AdminPanel';
 import AdminLogin from '@/components/AdminLogin';
 
@@ -11,8 +11,8 @@ export default new Router({
   routes: [
     {
       path: '/',
-      name: 'GamesList',
-      component: GamesList,
+      name: 'Home',
+      component: Home,
     },
     {
       path: '/admin',

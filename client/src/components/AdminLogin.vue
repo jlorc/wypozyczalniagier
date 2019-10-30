@@ -1,7 +1,9 @@
 <template>
   <div class="login__container">
     <div class="login__wrapper">
-      <img src="../assets/logo.png" alt="" class="login__logo">
+      <router-link to="/">
+        <img src="../assets/logo-games.png" alt="" class="login__logo">
+      </router-link>
       <div class="login__box">
         <span class="login__title">Zaloguj się</span>
         <input type="text" class="login__input" placeholder="Login" v-model="login">
@@ -116,6 +118,11 @@
       text-align: center;
       margin-top: 20px;
       cursor: pointer;
+      transition: .3s ease all;
+
+      &:hover {
+        background-color: #53e6a4;
+      }
     }
 
     &__error {

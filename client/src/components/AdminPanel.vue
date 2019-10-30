@@ -180,6 +180,11 @@
       cursor: pointer;
       max-width: 200px;
       font-size: 18px;
+      transition: .3s ease all;
+
+      &:hover {
+        background-color: #53e6a4;
+      }
     }
 
     &__menu {
