@@ -36,7 +36,7 @@
       },
 			setCategory(selected) {
 				this.activeCategory = selected.category_name;
-        
+
 				if (selected.category_id === 0) {
 					FetchService.fetchData('http://localhost:3000/api/games').then(data => {
 						this.$root.$emit('categoryUpdate', data);

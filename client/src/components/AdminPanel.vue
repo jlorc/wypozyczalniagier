@@ -168,6 +168,7 @@
   .admin-panel {
     display: flex;
     height: 100vh;
+    overflow: hidden;
 
     &__add-button {
       display: block;

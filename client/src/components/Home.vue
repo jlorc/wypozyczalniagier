@@ -9,6 +9,7 @@
     <div class="container">
       <categories></categories>
       <games-list></games-list>
+      <popup></popup>
     </div>
   </div>
 </template>
@@ -16,6 +17,7 @@
 <script>
 	import GamesList from "./GamesList";
 	import Categories from "./Categories";
+	import Popup from "./Popup";
 
 	export default {
 		name: 'Home',
@@ -25,6 +27,7 @@
 			};
 		},
     components: {
+			Popup,
 			GamesList,
       Categories
     }

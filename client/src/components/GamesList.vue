@@ -1,6 +1,8 @@
 <template>
   <div class="games-list__container">
-    <div v-for="item in list" class="games-list__box">
+    <div v-for="item in list"
+         class="games-list__box"
+         @click="showPopup(item)">
       <img :src="item.img_url"/>
       <span class="games-list__name">{{ item.game_name }}</span>
     </div>
@@ -24,7 +26,6 @@ export default {
   	init() {
 			FetchService.fetchData('http://localhost:3000/api/games').then(data => {
 				this.list = data;
-				console.log(this.list);
       });
 
 			this.refreshList();
@@ -34,6 +35,9 @@ export default {
     },
     filterGames(list) {
   		this.list = list;
+    },
+    showPopup(item) {
+			this.$root.$emit('showGameDetails', item);
     }
   }
 };
