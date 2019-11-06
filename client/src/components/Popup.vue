@@ -81,23 +81,23 @@
 			showThankYou() {
       	if (this.name && this.surname && this.number) {
 					this.showThankYouStep = true;
-					this.showFormStep = false;
-					this.error = false;
-					this.clearFormFields();
+					this.clearAllData();
         } else {
       		this.error = true;
         }
       },
-      clearFormFields() {
+			clearAllData() {
       	this.name = null;
       	this.surname = null;
       	this.number = null;
+				this.showFormStep = false;
+				this.error = false;
       },
       hidePopup() {
       	this.show = false;
       	setTimeout(() => {
-					this.showFormStep = false;
-					this.showThankYouStep = false;
+      		this.showThankYouStep = false;
+					this.clearAllData();
         }, 1000);
 				document.body.classList.remove('no-scroll');
       }
