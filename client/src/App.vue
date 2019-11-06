@@ -10,7 +10,7 @@ export default {
 };
 </script>
 
-<style>
+<style lang="less">
   #app {
     font-family: 'Montserrat', sans-serif;
     height: 100vh;
@@ -19,6 +19,10 @@ export default {
   body {
     background-color: #252525;
     margin: 0;
+
+    &.no-scroll {
+      overflow: hidden;
+    }
   }
 
 </style>

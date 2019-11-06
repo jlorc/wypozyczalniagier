@@ -50,7 +50,7 @@ export default {
       justify-content: flex-start;
       align-items: flex-start;
       flex-wrap: wrap;
-      margin-top: 50px;
+      margin: 50px 0;
     }
 
     &__box {
@@ -68,6 +68,11 @@ export default {
 
       img {
         max-width: 110px;
+      }
+
+      &:hover {
+        transform: translateY(-3px);
+        box-shadow: 0px 0px 5px 0px rgba(255, 255, 255, 0.83);
       }
     }
 
