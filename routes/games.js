@@ -2,8 +2,17 @@ const express = require('express');
 const router = express.Router();
 const Game = require('../model/game');
 const Category = require('../model/category');
+const RentedGame = require('../model/rentedGame');
 
 module.exports = router;
+
+router.get('/rented', (req, res) => {
+	RentedGame.findAll().then(rentedGames => {
+		res.json(rentedGames);
+	}).catch(err => {
+		res.send(`error: ${err}`);
+	})
+});
 
 router.post('/category', (req, res) => {
 	Game.findAll({
@@ -49,14 +58,14 @@ router.post('/game', (req, res) => {
 });
 
 router.put('/game/:id', (req, res) => {
-	if (!req.body.is_rented) {
+	if (!req.body.quantity) {
 		res.status(400);
 		res.json({
 			error: "Bad data",
 		})
 	} else {
 		Game.update(
-			{is_rented: req.body.is_rented},
+			{quantity: req.body.quantity},
 			{where: {id: req.params.id}}
 		).then(() => {
 			res.send('Game updated');

@@ -15,9 +15,6 @@ module.exports = db.sequelize.define(
 		game_description: {
 			type: Sequelize.STRING,
 		},
-		is_rented: {
-			type: Sequelize.INTEGER,
-		},
 		img_url: {
 			type: Sequelize.STRING,
 		},
@@ -50,4 +47,4 @@ module.exports = db.sequelize.define(
 		timestamps: false,
 		tableName: 'Games',
 	}
-)
+);

@@ -23,7 +23,10 @@
       <span class="popup__game-subtitle">Wymagania sprzętowe</span>
       <p class="popup__game-description">{{ data.hardware_requirements }}</p>
       <span class="popup__close" @click="hidePopup"></span>
-      <span class="popup__button">Wypożycz</span>
+      <div class="popup__button-wrapper">
+        <span class="popup__button">Wypożycz</span>
+        <p class="popup__game-description popup__game-description--button-info">Pozostałych sztuk: {{ data.quantity }}</p>
+      </div>
     </div>
   </div>
 </template>
@@ -83,10 +86,16 @@
       padding: 10px 30px;
       border-radius: 3px;
       text-align: center;
-      margin-top: auto;
       font-size: 18px;
       cursor: pointer;
       transition: 0.3s ease all;
+
+      &-wrapper {
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        margin-top: auto;
+      }
     }
 
     &__close {
@@ -145,6 +154,10 @@
       &-description {
         font-size: 16px;
         margin: 0;
+
+        &--button-info {
+          margin-left: 25px;
+        }
       }
 
       &-image {
