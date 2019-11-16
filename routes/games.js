@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const model = require('../database/db');
 const Game = require('../model/game');
 const Category = require('../model/category');
 const RentedGame = require('../model/rentedGame');
@@ -12,6 +13,37 @@ router.get('/rented', (req, res) => {
 	}).catch(err => {
 		res.send(`error: ${err}`);
 	})
+});
+
+router.post('/rent', (req, res) => {
+	if (!req.body.game_name) {
+		res.status(400);
+		res.json({
+			error: "Bad data",
+		})
+	} else {
+		return model.sequelize.transaction((t) => {
+			return Game.findOne(
+				{
+				where: {
+					id: req.body.game_id,
+				},
+				lock: t.LOCK.UPDATE, transaction: t
+				}
+			).then(game => {
+				if (game.quantity === 0) {
+					return res.send('Brak gier')
+				} else {
+					game.quantity -= 1;
+					game.save({transaction: t});
+				}
+			}).then(result => {
+				console.log('RESULT', result);
+			}).catch(err => {
+				return res.send(`Error: ${err}`);
+			});
+		});
+	}
 });
 
 router.post('/category', (req, res) => {

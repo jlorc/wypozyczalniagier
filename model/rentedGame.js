@@ -10,7 +10,7 @@ module.exports = db.sequelize.define(
 			autoIncrement: true,
 		},
 		game_id: {
-			type: Sequelize.STRING,
+			type: Sequelize.INTEGER,
 		},
 		game_name: {
 			type: Sequelize.STRING,
