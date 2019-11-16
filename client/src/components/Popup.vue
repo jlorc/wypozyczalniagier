@@ -49,6 +49,8 @@
 </template>
 
 <script>
+  import FetchService from "../services/fetchService";
+
   export default {
     name: 'Popup',
     data() {
@@ -80,8 +82,20 @@
       },
 			showThankYou() {
       	if (this.name && this.surname && this.number) {
-					this.showThankYouStep = true;
-					this.clearAllData();
+					const data = {
+						'game_id': parseInt(this.data.id),
+            'game_name': this.data.game_name,
+            'name': this.name,
+            'surname': this.surname,
+            'phone_number': this.number,
+					};
+
+					FetchService.postData('http://localhost:3000/api/rent', data).then(res => {
+						this.showThankYouStep = true;
+						this.clearAllData();
+					}).catch(err => {
+						console.log(err);
+          });
         } else {
       		this.error = true;
         }
