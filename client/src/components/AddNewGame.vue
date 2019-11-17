@@ -2,7 +2,10 @@
   <div>
     <div class="admin-panel__dashboard-content">
       <div class="admin-panel__dashboard-item" v-for="item in newGame">
-        <input type="text" :placeholder="item.placeholder" v-model="item.value" class="admin-panel__dashboard-input">
+        <input v-if="!item.selectMode" type="text" :placeholder="item.placeholder" v-model="item.value" class="admin-panel__dashboard-input">
+        <select v-else name="category" id="category" v-model="item.value" class="admin-panel__dashboard-input">
+          <option :value="category.category_id" v-for="category in categories">{{ category.category_name }}</option>
+        </select>
       </div>
     </div>
     <span class="admin-panel__dashboard-error" v-if="error">Proszę uzupełnić wszystkie pola!</span>
@@ -20,6 +23,7 @@
 			return {
 				error: false,
 				success: false,
+        categories: [],
 				newGame: {
 					id: {
 						value: null,
@@ -48,6 +52,7 @@
 					category: {
 						value: null,
 						placeholder: 'Kategoria',
+            selectMode: true,
 					},
 					game_mode: {
 						value: null,
@@ -72,6 +77,11 @@
 				}
 			};
 		},
+    mounted() {
+			FetchService.fetchData('http://localhost:3000/api/categories').then(categories => {
+				this.categories = categories;
+			})
+    },
 		methods: {
 			validateAddFields() {
 				return (
