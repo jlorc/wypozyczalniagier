@@ -24,14 +24,14 @@ export default {
 	},
   methods: {
   	init() {
+  		this.refreshList();
+			this.$root.$on('updateGamesData', this.refreshList);
+			this.$root.$on('categoryUpdate', this.filterGames);
+		},
+		refreshList(e) {
 			FetchService.fetchData('http://localhost:3000/api/games').then(data => {
 				this.list = data;
-      });
-
-			this.refreshList();
-		},
-		refreshList() {
-			this.$root.$on('categoryUpdate', this.filterGames);
+			});
     },
     filterGames(list) {
   		this.list = list;

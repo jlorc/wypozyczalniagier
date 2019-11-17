@@ -24,7 +24,7 @@
       <p class="popup__game-description">{{ data.hardware_requirements }}</p>
       <span class="popup__close" @click="hidePopup"></span>
       <div class="popup__button-wrapper">
-        <span class="popup__button" @click="showForm">Wypożycz</span>
+        <span class="popup__button" :class="{'disabled': data.quantity === 0}" @click="showForm">Wypożycz</span>
         <p class="popup__game-description popup__game-description--button-info">Pozostałych sztuk: {{ data.quantity }}</p>
       </div>
     </div>
@@ -41,9 +41,16 @@
       <span class="popup__close" @click="hidePopup"></span>
     </div>
     <div class="popup__wrapper popup__wrapper--thank-you" v-if="!showFormStep && showThankYouStep">
-      <h2 class="popup__form-title">Gratulacje!</h2>
-      <p class="popup__form-description">Udało Ci się zarezerwować grę, zapraszamy do salonu po jej odbiór!</p>
-      <span class="popup__close" @click="hidePopup"></span>
+      <div v-if="rentError">
+        <h2 class="popup__form-title">Błąd!</h2>
+        <p class="popup__form-description">{{ rentErrorMessage }}</p>
+        <span class="popup__close" @click="hidePopup"></span>
+      </div>
+      <div v-else>
+        <h2 class="popup__form-title">Gratulacje!</h2>
+        <p class="popup__form-description">Udało Ci się zarezerwować grę, zapraszamy do salonu po jej odbiór!</p>
+        <span class="popup__close" @click="hidePopup"></span>
+      </div>
     </div>
   </div>
 </template>
@@ -63,6 +70,8 @@
         surname: null,
         number: null,
         error: false,
+        rentError: false,
+        rentErrorMessage: '',
       };
     },
     mounted() {
@@ -93,7 +102,15 @@
 					FetchService.postData('http://localhost:3000/api/rent', data).then(res => {
 						this.showThankYouStep = true;
 						this.clearAllData();
-					}).catch(err => {
+            this.$root.$emit('updateGamesData');
+						return res.json();
+					}).then(response => {
+						if (response.hasOwnProperty('error')) {
+							this.rentErrorMessage = response.error;
+							this.rentError = true;
+							this.clearAllData();
+						}
+          }).catch(err => {
 						console.log(err);
           });
         } else {
@@ -106,6 +123,8 @@
       	this.number = null;
 				this.showFormStep = false;
 				this.error = false;
+				this.rentError = false;
+				this.rentErrorMessage = '';
       },
       hidePopup() {
       	this.show = false;
@@ -192,6 +211,11 @@
       font-size: 18px;
       cursor: pointer;
       transition: 0.3s ease all;
+
+      &.disabled {
+        pointer-events: none;
+        background-color: gray;
+      }
 
       &--centered {
         margin: auto;
