@@ -4,8 +4,17 @@ const model = require('../database/db');
 const Game = require('../model/game');
 const Category = require('../model/category');
 const RentedGame = require('../model/rentedGame');
+const QuantityRented = require('../model/quantityRented');
 
 module.exports = router;
+
+router.get('/quantityRented', (req, res) => {
+	QuantityRented.findAll().then(quantityRented => {
+		res.json(quantityRented);
+	}).catch(err => {
+		res.send(`error: ${err}`);
+	})
+});
 
 router.get('/rented', (req, res) => {
 	RentedGame.findAll().then(rentedGames => {
