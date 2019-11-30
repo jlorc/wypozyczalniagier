@@ -93,11 +93,11 @@ router.post('/category', (req, res) => {
 });
 
 router.get('/categories', (req, res) => {
-	Category.findAll().then(categories => {
+	return model.sequelize.query('CALL getCategories();').then(categories => {
 		res.json(categories);
 	}).catch(err => {
-		res.send(`error: ${err}`);
-	})
+		res.send({ error: err});
+	});
 });
 
 router.get('/games', (req, res) => {
