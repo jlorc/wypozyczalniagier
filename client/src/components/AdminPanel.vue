@@ -125,6 +125,25 @@
         align-items: center;
         flex-wrap: wrap;
         margin-top: 60px;
+
+        &--table {
+          overflow: scroll;
+          height: 490px;
+          position: relative;
+          justify-content: flex-start;
+          align-items: flex-start;
+
+          table {
+            thead {
+              th {
+                position: sticky;
+                top: 0;
+                z-index: 10;
+                background-color: #252525;
+              }
+            }
+          }
+        }
       }
 
       &-item {

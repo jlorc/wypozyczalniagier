@@ -1,5 +1,5 @@
 <template>
-  <div class="admin-panel__dashboard-content">
+  <div class="admin-panel__dashboard-content admin-panel__dashboard-content--table">
     <table class="rented-table">
       <thead>
       <tr>
