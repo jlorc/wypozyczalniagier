@@ -8,9 +8,15 @@ router.post('/authenticate', (req, res) => {
 	const login = req.body.login;
 	const password = req.body.password;
 
-	Admin.findAll({ raw: true }).then(data => {
-		const dataLogin = data[0].login;
-		const dataPassword = data[0].password;
+	Admin.findOne(
+		{
+			where: {
+				login: 'admin',
+			},
+			raw: true,
+		}).then(data => {
+		const dataLogin = data.login;
+		const dataPassword = data.password;
 
 		if ((dataLogin === login) && (dataPassword === password)) {
 			res.status(200);
